@@ -1,0 +1,29 @@
+
+# .gitignore
+
+
+__pycache__/
+
+*.pyc
+
+# local environment files
+.env
+.env.*
+
+#  aw / local data files
+posey_data/*
+*.csv
+*.json
+
+# Postgres container data
+db_data/
+pg_data/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.DS_Store
+
