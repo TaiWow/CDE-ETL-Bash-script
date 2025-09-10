@@ -102,6 +102,8 @@ This appends the line `0 0 * * * /path/to/etl_pipeline.sh` to the current userâ€
 
 ## Architecture Diagram
 
+![ETL_Pipeline.png](ETL_Pipeline.png)
+
 
 
 ## Moving JSON and CSV Files
