@@ -156,7 +156,7 @@ chmod +x Scripts/bash_scripts/*.sh load_posey_pg.sh
 |---------|---------|
 | Run ETL pipeline | [./Scripts/bash_scripts/etl_pipeline.sh](Scripts/bash_scripts/etl_pipeline.sh) |
 | Schedule ETL daily | [./Scripts/bash_scripts/setup_cron.sh](Scripts/bash_scripts/setup_cron.sh) |
-| Move JSON/CSV files | [./Scripts/bash_scripts/move_flies.sh](Scripts/bash_scripts/move_flies.sh) \[src\] \[dest\] |
+| Move JSON/CSV files | [./Scripts/bash_scripts/move_flies.sh](Scripts/bash_scripts/move_flies.sh) |
 | Load Parch & Posey into PostgreSQL | [./load_posey_pg.sh](load_posey_pg.sh) |
 | Execute business queries | [./Scripts/bash_scripts/run_queries.sh](Scripts/bash_scripts/run_queries.sh) |
 
