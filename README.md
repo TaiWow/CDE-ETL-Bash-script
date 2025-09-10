@@ -102,7 +102,7 @@ This appends the line `0 0 * * * /path/to/etl_pipeline.sh` to the current userâ€
 
 ## Architecture Diagram
 
-![`ETL_Pipeline.png`](ETL_Pipeline.png)
+
 
 ## Moving JSON and CSV Files
 The [`move_flies.sh`](Scripts/bash_scripts/move_flies.sh) script relocates one or more `.csv` and `.json` files to a target directory.
