@@ -4,24 +4,28 @@
 ## Table of Contents
 1. [Overview](#overview)
 2. [Project Structure](#project-structure)
-3. [Prerequisites](#prerequisites)
-4. [Environment Variables](#environment-variables)
-5. [ETL Pipeline](#etl-pipeline)
+3. [Technical Stack](#technical-stack)
+4. [ETL Pipeline](#etl-pipeline)
     - [Extract](#extract)
     - [Transform](#transform)
     - [Load](#load)
     - [Schedule with Cron](#schedule-with-cron)
-6. [Architecture Diagram](#architecture-diagram)
-7. [Moving JSON and CSV Files](#moving-json-and-csv-files)
-8. [Loading the Parch & Posey Dataset](#loading-the-parch--posey-dataset)
-9. [Business Questions (SQL)](#business-questions-sql)
-10. [Running the Scripts](#running-the-scripts)
+5. [Architecture Diagram](#architecture-diagram)
+6. [Moving JSON and CSV Files](#moving-json-and-csv-files)
+7. [Loading the Parch & Posey Dataset](#loading-the-parch--posey-dataset)
+8. [Business Questions (SQL)](#business-questions-sql)
+9. [Running the Scripts](#running-the-scripts)
 
 
 ## Overview
-This project demonstrates a simple end-to-end ETL (Extract–Transform–Load) workflow written entirely in **Bash**.
-The pipeline downloads a public CSV file, transforms selected columns, and stages it into a **Gold** dataset.
-It also includes utilities to move CSV/JSON files, ingest the Parch & Posey dataset into PostgreSQL, and a collection of SQL scripts answering common business questions.
+This project demonstrates a simple ETL (Extract–Transform–Load) pipeline that retrieves a CSV file from an environment‑driven
+URL, performs column renaming and selection and lands the cleaned data in a `Gold/` directory. 
+Beyond the ETL, supporting scripts demonstrate how to schedule recurring jobs with Cron, move JSON/CSV assets between directories and load a larger
+external dataset (Parch & Posey) into a PostgreSQL database running in Docker containers.
+
+To help business stakeholders ask questions of the data, the repository also provides well‑documented SQL examples and a loader
+script that verifies required services before ingesting data. Together these components illustrate how Bash, Docker and Git can
+be combined to manage data pipelines in a lightweight yet reproducible manner.
 
 ## Project Structure
 ```
@@ -46,28 +50,13 @@ CDE-ETL-Bash-script/
 └── .gitignore
 ```
 
-## Prerequisites
-- Linux or macOS shell with Bash ≥ 4
-- `curl`, `cut`, `sed`, `tail`, `wc`
-- Docker & Docker Compose (for PostgreSQL loading)
-- Cron (usually preinstalled on Linux)
-
----
-
-## Environment Variables
-The ETL script expects the CSV URL to be stored in an environment variable. Create an `.env` file at the project root and load it before running any scripts:
-
-```bash
-cat <<'EOF' > .env
-CSV_URL="https://www.stats.govt.nz/assets/Uploads/Annual-enterprise-survey/Annual-enterprise-survey-2023-financial-year-provisional/Download-data/annual-enterprise-survey-2023-financial-year-provisional.csv"
-EOF
-
-# load variables into the current shell
-source .env
-```
-
-You may also export the variable in your shell profile or directly inside [`etl_pipeline.sh`](Scripts/bash_scripts/etl_pipeline.sh).
-
+## Technical Stack
+- **Bash** – primary scripting language for ETL and utilities
+- **Docker & Docker Compose** – container orchestration for PostgreSQL and Adminer
+- **PostgreSQL** – relational database used to store Parch & Posey data
+- **Adminer** – lightweight database management UI
+- **Cron** – schedules automated ETL runs
+- **Git** – version control for all scripts and SQL files
 
 ## ETL Pipeline
 Make [`etl_pipeline.sh`](Scripts/bash_scripts/etl_pipeline.sh) executable and run it:
@@ -132,9 +121,11 @@ docker compose up -d
 3. Make [`load_posey_pg.sh`](load_posey_pg.sh) executable and run it:
 
 ```bash
-chmod +x load_posey_pg.sh
+# Make script executable
+chmod +x Scripts/bash_scripts/load_posey_pg.sh
 
-./load_posey_pg.sh
+# Run the script
+./Scripts/bash_scripts/load_posey_pg.sh
 ```
 
 The script checks that the `posey_postgres` container is running and loads the CSVs into the `posey` database.
